@@ -5,6 +5,8 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 
+const applySecurity = require("./securityMiddlewares");
+
 // App Config
 const app = express();
 const port = process.env.PORT || 3005;
@@ -13,6 +15,7 @@ const mongoConnect = process.env.MONGO_URI;
 // Middleware
 app.use(express.json());
 app.use(Cors());
+applySecurity(app);
 
 // DB Config
 mongoose
