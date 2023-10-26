@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-exports.Todos = mongoose.model("Todos", {
+const todoSchema = new Schema({
   title: {
     type: String,
     required: true,
@@ -11,14 +12,13 @@ exports.Todos = mongoose.model("Todos", {
   },
   priority: {
     type: String,
-    enum: ["High", "Medium", "Low"],
+    enum: ["high", "medium", "low"],
     required: true,
   },
   status: {
     type: String,
-    enum: ["Completed", "Not completed", "Ongoing"],
-    default: "Not completed",
-    required: true,
+    enum: ["completed", "not completed", "ongoing"],
+    default: "not completed",
   },
   dateCreated: {
     type: Date,
@@ -28,11 +28,14 @@ exports.Todos = mongoose.model("Todos", {
     type: Date,
   },
   assignor: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    type: String,
   },
   assignee: {
     type: String,
     required: true,
   },
 });
+
+const Todos = mongoose.model("Todos", todoSchema);
+
+module.exports = Todos;
