@@ -38,6 +38,10 @@ const CategoryList = () => {
         console.error(`Error deleting resource with ID ${id}:`, error);
       });
   };
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
 
   const token = localStorage.getItem("token");
   const headers = {
@@ -125,9 +129,10 @@ const CategoryList = () => {
           Add
         </Button>
         <Button
-          variant="outlined"
+          variant="contained"
+          color="error"
           sx={{ m: "1rem", mr: "0" }}
-          onClick={() => navigate("/category/add")}
+          onClick={handleLogout}
         >
           Logout
         </Button>
