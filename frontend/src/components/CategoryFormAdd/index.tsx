@@ -20,6 +20,7 @@ import { useNavigate } from "react-router-dom";
 import { blue } from "@mui/material/colors";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 interface Props {
   onSubmit: (values: TodosFormProps) => void;
@@ -110,25 +111,11 @@ const CategoryFormAdd = ({ onSubmit, category }: Props) => {
                 )}
               </Select>
             </FormControl>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
               <MobileDatePicker
-                name="dueDates"
                 label="Due Date"
                 value={formik.values.dueDates}
                 onChange={(date) => formik.setFieldValue("dueDates", date)}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    name="dueDates"
-                    size="small"
-                    error={
-                      formik.touched.dueDates && Boolean(formik.errors.dueDates)
-                    }
-                    helperText={
-                      formik.touched.dueDates && formik.errors.dueDates
-                    }
-                  />
-                )}
               />
             </LocalizationProvider>
             <TextField

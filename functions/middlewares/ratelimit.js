@@ -5,4 +5,6 @@ exports.loginLimiter = rateLimit({
   limit: 5, // Limit each IP to 5 requests per `window` (here, per 10 seconds)
   standardHeaders: "draft-7", // Set `RateLimit` and `RateLimit-Policy` headers
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+  message: "Too many failed attempts, try again later",
+  skipSuccessfulRequests: true,
 });

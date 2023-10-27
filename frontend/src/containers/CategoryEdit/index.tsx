@@ -3,27 +3,29 @@ import { CategoryForm } from "../../components";
 import { TodosEdit as CategoryFormProps } from "../../types";
 import axios from "axios";
 import { BASE_URL } from "../../environment";
+import { useEffect } from "react";
 
 const CategoryEdit = () => {
   const navigate = useNavigate();
-  const validate = localStorage.getItem("token");
-  if (!validate) {
-    navigate("/login");
-  }
 
   const token = localStorage.getItem("token");
   const headers = {
     Authorization: `Bearer ${token}`,
     "Content-type": "application/json",
   };
-
+  useEffect(() => {
+    if (!token) {
+      navigate("/login");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [navigate]);
   const handleSubmit = async (values: CategoryFormProps) => {
     axios
-      .put(`${BASE_URL}/todos/${values._id}`, values, {
+      .put(`${BASE_URL}/api/todos/${values._id}`, values, {
         headers,
       })
       .then((response) => {
-        console.log("Edit Category form values submitted:", response.data);
+        console.log("Edit todo submitted:", response.data);
         console.log("Form values submitted:", values);
       })
       .catch((error) => {

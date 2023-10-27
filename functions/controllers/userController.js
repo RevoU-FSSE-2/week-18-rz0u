@@ -66,7 +66,7 @@ const loginUser = async (req, res) => {
       data: token,
     });
   } else {
-    res.status(400).json({ error: "Incorrect password" });
+    res.status(400).json({ error: "Incorrect username or password" });
   }
 };
 

@@ -1,6 +1,7 @@
 const express = require("express");
 const Cors = require("cors");
 const dotenv = require("dotenv");
+const functions = require("firebase-functions");
 
 dotenv.config();
 
@@ -25,6 +26,8 @@ applySecurity(app);
 app.use("/api/users", userRouter);
 app.use("/api", authentication, todoRouter);
 
-app.listen(port, () => {
-  console.log(`server is running on localhost:${port}`);
-});
+// app.listen(port, () => {
+//   console.log(`server is running on localhost:${port}`);
+// });
+
+exports.milestone_3_rzou = functions.https.onRequest(app);

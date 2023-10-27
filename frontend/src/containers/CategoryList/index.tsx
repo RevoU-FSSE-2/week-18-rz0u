@@ -61,40 +61,15 @@ const CategoryList = () => {
 
   useEffect(() => {
     getCategoryList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (!token) {
       navigate("/login");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigate]);
-
-  // let filteredData: Todos[] = [];
-  // if (info && info.data) {
-  //   filteredData = info.data.map(
-  //     ({
-  //       _id,
-  //       title,
-  //       content,
-  //       priority,
-  //       status,
-  //       dueDates,
-  //       assignor,
-  //       assignee,
-  //       dateCreated,
-  //     }) => ({
-  //       _id,
-  //       title,
-  //       content,
-  //       priority,
-  //       status,
-  //       dueDates,
-  //       assignor,
-  //       assignee,
-  //       dateCreated,
-  //     })
-  //   );
-  // }
 
   const filteredData =
     info?.data.map(
@@ -144,10 +119,17 @@ const CategoryList = () => {
       >
         <Button
           variant="outlined"
-          sx={{ m: "1rem", mr: "6rem" }}
+          sx={{ m: "1rem", mr: "0" }}
           onClick={() => navigate("/category/add")}
         >
           Add
+        </Button>
+        <Button
+          variant="outlined"
+          sx={{ m: "1rem", mr: "0" }}
+          onClick={() => navigate("/category/add")}
+        >
+          Logout
         </Button>
       </Box>
       <CategoryTable
