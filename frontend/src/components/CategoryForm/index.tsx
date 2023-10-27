@@ -13,17 +13,14 @@ import {
   Typography,
 } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import {
-  Transactions,
-  TransactionsApproval as CategoryFormProps,
-} from "../../types";
+import { Todos, TodosEdit as CategoryFormProps } from "../../types";
 import { initialValues, validationSchema } from "./CategoryFormSchema";
 import { useNavigate } from "react-router-dom";
 import { blue } from "@mui/material/colors";
 
 interface Props {
   onSubmit: (values: CategoryFormProps) => void;
-  category?: Transactions;
+  category?: Todos;
 }
 
 const CategoryForm = ({ onSubmit, category }: Props) => {
@@ -60,7 +57,7 @@ const CategoryForm = ({ onSubmit, category }: Props) => {
         }}
       >
         <Typography variant="h6" sx={{ m: "1rem" }}>
-          TRANSACTIONS APPROVAL
+          EDIT
         </Typography>
         <Button variant="text" onClick={() => navigate("/category")}>
           Back
@@ -78,11 +75,9 @@ const CategoryForm = ({ onSubmit, category }: Props) => {
                 error={formik.touched.status && Boolean(formik.errors.status)}
                 size="small"
               >
-                <MenuItem disabled value="pending">
-                  Pending
-                </MenuItem>
-                <MenuItem value={"approved"}>Approved</MenuItem>
-                <MenuItem value={"rejected"}>Rejected</MenuItem>
+                <MenuItem value={"completed"}>Completed</MenuItem>
+                <MenuItem value={"not completed"}>Not Completed</MenuItem>
+                <MenuItem value={"ongoing"}>Ongoing</MenuItem>
                 {formik.touched.status && formik.errors.status && (
                   <FormHelperText error>{formik.errors.status}</FormHelperText>
                 )}

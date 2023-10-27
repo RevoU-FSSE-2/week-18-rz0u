@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { GetTransactionsResponse } from "../../types";
+import { GetTodosResponse } from "../../types";
 import axios from "axios";
 import { CategoryList as CategoryTable } from "../../components";
 import { Box, Button, Container, Typography } from "@mui/material";
@@ -8,11 +8,7 @@ import { BASE_URL } from "../../environment";
 
 const CategoryList = () => {
   const navigate = useNavigate();
-  const validate = localStorage.getItem("token");
-  if (!validate) {
-    navigate("/login");
-  }
-  const [info, setInfo] = useState<GetTransactionsResponse>();
+  const [info, setInfo] = useState<GetTodosResponse>();
 
   const handleEditClick = (id: string) => {
     console.log(`Edit clicked for ID: ${id}`);
@@ -22,9 +18,8 @@ const CategoryList = () => {
   const handleDeleteClick = (id: string) => {
     console.log(`Delete clicked for ID: ${id}`);
     axios
-      .delete(`${BASE_URL}/transactions/delete`, {
+      .delete(`${BASE_URL}/api/todos/${id}`, {
         headers,
-        data: { transactionId: id },
       })
       .then((response) => {
         console.log(`Resource with ID ${id} has been deleted.`, response);
@@ -52,7 +47,7 @@ const CategoryList = () => {
 
   const getCategoryList = async () => {
     axios
-      .get<GetTransactionsResponse>(`${BASE_URL}/transactions`, {
+      .get<GetTodosResponse>(`${BASE_URL}/api/todos`, {
         headers,
       })
       .then((response) => {
@@ -66,24 +61,63 @@ const CategoryList = () => {
 
   useEffect(() => {
     getCategoryList();
-  });
+  }, []);
+
+  useEffect(() => {
+    if (!token) {
+      navigate("/login");
+    }
+  }, [navigate]);
+
+  // let filteredData: Todos[] = [];
+  // if (info && info.data) {
+  //   filteredData = info.data.map(
+  //     ({
+  //       _id,
+  //       title,
+  //       content,
+  //       priority,
+  //       status,
+  //       dueDates,
+  //       assignor,
+  //       assignee,
+  //       dateCreated,
+  //     }) => ({
+  //       _id,
+  //       title,
+  //       content,
+  //       priority,
+  //       status,
+  //       dueDates,
+  //       assignor,
+  //       assignee,
+  //       dateCreated,
+  //     })
+  //   );
+  // }
 
   const filteredData =
     info?.data.map(
       ({
         _id,
-        amount,
-        currency,
-        sourceAccount,
-        destinationAccount,
+        title,
+        content,
+        priority,
         status,
+        dueDates,
+        assignor,
+        assignee,
+        dateCreated,
       }) => ({
         _id,
-        amount,
-        currency,
-        sourceAccount,
-        destinationAccount,
+        title,
+        content,
+        priority,
         status,
+        dueDates,
+        assignor,
+        assignee,
+        dateCreated,
       })
     ) || [];
 
@@ -99,7 +133,7 @@ const CategoryList = () => {
     >
       <Box>
         <Typography variant="h4" gutterBottom>
-          Transactions List
+          Todos List
         </Typography>
       </Box>
       <Box

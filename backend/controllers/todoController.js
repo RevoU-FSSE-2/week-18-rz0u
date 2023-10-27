@@ -4,9 +4,9 @@ const Todos = require("../models/todos");
 const getTodos = async (req, res) => {
   try {
     const allTodos = await Todos.find();
-    res.status(200).send(allTodos);
+    res.status(200).json({ message: "Success get all todos", data: allTodos });
   } catch (error) {
-    res.status(400).send(error.message);
+    res.status(400).json({ message: error.message });
   }
 };
 
@@ -22,9 +22,9 @@ const createTodos = async (req, res) => {
       assignee,
       assignor: req.username,
     });
-    res.status(201).send({ message: "Todo created", data: newTodo });
+    res.status(201).json({ message: "Todo created", data: newTodo });
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -43,9 +43,9 @@ const updateTodo = async (req, res) => {
     if (!updatedTodo) {
       return res.status(404).send("Todo not found");
     }
-    res.status(200).send(updatedTodo);
+    res.status(200).json({ message: "success updating", data: updatedTodo });
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -55,22 +55,22 @@ const deleteTodo = async (req, res) => {
   try {
     const todo = await Todos.findOne({ _id: id, assignor: req.username });
     if (!todo) {
-      res.status(404).send("Todo not found");
+      res.status(404).json({ message: "Todo not found" });
       return;
     }
     if (req.role === "employee" && req.id !== todo.assignor) {
-      res.status(403).send("Permission denied");
+      res.status(403).json({ message: "Permission denied" });
       return;
     }
     const deletedTodo = await Todos.findByIdAndDelete({ _id: id });
 
     if (deletedTodo) {
-      res.status(200).send("Todo deleted successfully");
+      res.status(200).json({ message: "Todo deleted successfully" });
     } else {
-      res.status(500).send("Failed to delete the todo");
+      res.status(500).json({ message: "Failed to delete the todo" });
     }
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(500).json({ message: error.message });
   }
 };
 

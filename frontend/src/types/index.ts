@@ -10,39 +10,48 @@ export interface LoginResponse {
 }
 
 export interface RegisterForm {
+  email: string;
   username: string;
-  role: string;
   password: string;
+  role: string;
 }
 
 export interface RegisterResponse {
   data: {
-    acknowledged: boolean;
-    insertedId: string;
+    email: string;
+    username: string;
+    password: string;
+    role: string;
   };
 }
 
-export interface Transactions {
+export interface Todos {
   _id: string;
-  amount: string;
-  currency: string;
-  sourceAccount: string;
-  destinationAccount: string;
+  title: string;
+  content: string;
+  priority: string;
   status: string;
+  dueDates: string;
+  assignor: string;
+  assignee: string;
+  dateCreated: string;
 }
 
-export interface GetTransactionsResponse {
-  data: Transactions[];
+export interface GetTodosResponse {
+  data: Todos[];
   current_page: number;
   total_item: number;
   total_page: number;
 }
 
-export type TransactionForm = Omit<Transactions, "_id">;
+export type TodosForm = Omit<Todos, "_id">;
 
-export type TransactionFormAdd = Omit<Transactions, "_id" | "status">;
+export type TodosFormAdd = Omit<
+  Todos,
+  "_id" | "status" | "assignor" | "dateCreated"
+>;
 
-export interface TransactionsApproval {
+export interface TodosEdit {
   _id: string;
   status: string;
 }

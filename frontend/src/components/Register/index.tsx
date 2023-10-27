@@ -61,6 +61,17 @@ const RegisterForm = ({ onSubmit }: Props) => {
         <form onSubmit={formik.handleSubmit}>
           <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
             <TextField
+              name="email"
+              label="Email"
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.email && Boolean(formik.errors.email)}
+              helperText={formik.touched.email && formik.errors.email}
+              placeholder="John@mail.com"
+              size="small"
+            />
+            <TextField
               name="username"
               label="Username"
               value={formik.values.username}
@@ -87,14 +98,14 @@ const RegisterForm = ({ onSubmit }: Props) => {
               <Select
                 name="role"
                 label="Role"
-                defaultValue={"maker"}
+                defaultValue={"employee"}
                 value={formik.values.role}
                 onChange={formik.handleChange}
                 error={formik.touched.role && Boolean(formik.errors.role)}
                 size="small"
               >
-                <MenuItem value={"approver"}>Approver</MenuItem>
-                <MenuItem value={"maker"}>Maker</MenuItem>
+                <MenuItem value={"manager"}>Manager</MenuItem>
+                <MenuItem value={"employee"}>Employee</MenuItem>
                 {formik.touched.role && formik.errors.role && (
                   <FormHelperText error>{formik.errors.role}</FormHelperText>
                 )}

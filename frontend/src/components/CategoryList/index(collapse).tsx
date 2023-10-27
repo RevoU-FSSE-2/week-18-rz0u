@@ -17,6 +17,8 @@ interface Props {
   onClickDelete: (_id: string) => void;
 }
 
+const [open, setOpen] = React.useState(false);
+
 const CategoryList = ({ data, onClickEdit, onClickDelete }: Props) => {
   return (
     <TableContainer component={Paper} elevation={5}>
@@ -24,33 +26,29 @@ const CategoryList = ({ data, onClickEdit, onClickDelete }: Props) => {
         <TableHead>
           <TableRow>
             <TableCell>Title</TableCell>
-            <TableCell align="center">Content</TableCell>
-            <TableCell align="center">Priority</TableCell>
-            <TableCell align="center">Status</TableCell>
-            <TableCell align="center">Due Date</TableCell>
-            <TableCell align="center">Assignor</TableCell>
             <TableCell align="center">Assignee</TableCell>
-            <TableCell align="center">Date Created</TableCell>
+            <TableCell align="center">Priority</TableCell>
+            <TableCell align="center">Due Date</TableCell>
+            <TableCell align="center">Status</TableCell>
+            <TableCell align="center">Status</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {data.map((item) => (
             <TableRow key={item._id}>
-              <TableCell>{item.title}</TableCell>
-              <TableCell align="center">{item.content}</TableCell>
-              <TableCell align="center">{item.priority}</TableCell>
+              <TableCell>{item._id}</TableCell>
+              <TableCell align="center">{item.amount}</TableCell>
+              <TableCell align="center">{item.currency}</TableCell>
+              <TableCell align="center">{item.sourceAccount}</TableCell>
+              <TableCell align="center">{item.destinationAccount}</TableCell>
               <TableCell align="center">{item.status}</TableCell>
-              <TableCell align="center">{item.dueDates}</TableCell>
-              <TableCell align="center">{item.assignor}</TableCell>
-              <TableCell align="center">{item.assignee}</TableCell>
-              <TableCell align="center">{item.dateCreated}</TableCell>
               <TableCell align="center">
                 <ButtonGroup disableElevation>
                   <Button
                     variant="contained"
                     onClick={() => onClickEdit(item._id)}
                   >
-                    Edit
+                    Approve
                   </Button>
                   <Button
                     variant="outlined"

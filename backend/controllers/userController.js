@@ -49,7 +49,7 @@ const loginUser = async (req, res) => {
   const user = await User.findOne({ username });
   if (!user) {
     return res.status(400).json({
-      Message: "Username doesnt exist",
+      message: "Username doesnt exist",
     });
   }
 

@@ -3,27 +3,31 @@ import {
   Box,
   Button,
   Container,
+  FormControl,
+  FormHelperText,
   IconButton,
+  InputLabel,
+  MenuItem,
   Paper,
+  Select,
   TextField,
   Typography,
 } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import {
-  Transactions,
-  TransactionFormAdd as CategoryFormProps,
-} from "../../types";
+import { Todos, TodosFormAdd as TodosFormProps } from "../../types";
 import { initialValues, validationSchema } from "./CategoryFormSchema";
 import { useNavigate } from "react-router-dom";
 import { blue } from "@mui/material/colors";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 
 interface Props {
-  onSubmit: (values: CategoryFormProps) => void;
-  category?: Transactions;
+  onSubmit: (values: TodosFormProps) => void;
+  category?: Todos;
 }
 
 const CategoryFormAdd = ({ onSubmit, category }: Props) => {
-  const handleSubmit = (values: CategoryFormProps) => {
+  const handleSubmit = (values: TodosFormProps) => {
     onSubmit(values);
   };
   const navigate = useNavigate();
@@ -56,7 +60,7 @@ const CategoryFormAdd = ({ onSubmit, category }: Props) => {
         }}
       >
         <Typography variant="h6" sx={{ m: "1rem" }}>
-          ADD TRANSACTIONS
+          ADD TODOS
         </Typography>
         <Button variant="text" onClick={() => navigate("/category")}>
           Back
@@ -64,54 +68,77 @@ const CategoryFormAdd = ({ onSubmit, category }: Props) => {
         <form onSubmit={formik.handleSubmit}>
           <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
             <TextField
-              name="amount"
-              label="Amount"
-              value={formik.values.amount}
+              name="title"
+              label="Title"
+              value={formik.values.title}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={formik.touched.amount && Boolean(formik.errors.amount)}
-              helperText={formik.touched.amount && formik.errors.amount}
+              error={formik.touched.title && Boolean(formik.errors.title)}
+              helperText={formik.touched.title && formik.errors.title}
               size="small"
             />
             <TextField
-              name="currency"
-              label="Currency"
-              value={formik.values.currency}
+              name="content"
+              label="Content"
+              value={formik.values.content}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={formik.touched.currency && Boolean(formik.errors.currency)}
-              helperText={formik.touched.currency && formik.errors.currency}
+              error={formik.touched.content && Boolean(formik.errors.content)}
+              helperText={formik.touched.content && formik.errors.content}
               size="small"
             />
+            <FormControl fullWidth>
+              <InputLabel>Priority</InputLabel>
+              <Select
+                name="priority"
+                label="Priority"
+                defaultValue={"low"}
+                value={formik.values.priority}
+                onChange={formik.handleChange}
+                error={
+                  formik.touched.priority && Boolean(formik.errors.priority)
+                }
+                size="small"
+              >
+                <MenuItem value={"high"}>High</MenuItem>
+                <MenuItem value={"medium"}>Medium</MenuItem>
+                <MenuItem value={"low"}>Low</MenuItem>
+                {formik.touched.priority && formik.errors.priority && (
+                  <FormHelperText error>
+                    {formik.errors.priority}
+                  </FormHelperText>
+                )}
+              </Select>
+            </FormControl>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <MobileDatePicker
+                name="dueDates"
+                label="Due Date"
+                value={formik.values.dueDates}
+                onChange={(date) => formik.setFieldValue("dueDates", date)}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    name="dueDates"
+                    size="small"
+                    error={
+                      formik.touched.dueDates && Boolean(formik.errors.dueDates)
+                    }
+                    helperText={
+                      formik.touched.dueDates && formik.errors.dueDates
+                    }
+                  />
+                )}
+              />
+            </LocalizationProvider>
             <TextField
-              name="sourceAccount"
-              label="Source Account"
-              value={formik.values.sourceAccount}
+              name="assignee"
+              label="Assignee"
+              value={formik.values.assignee}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={
-                formik.touched.sourceAccount &&
-                Boolean(formik.errors.sourceAccount)
-              }
-              helperText={
-                formik.touched.sourceAccount && formik.errors.sourceAccount
-              }
-              size="small"
-            />
-            <TextField
-              name="destinationAccount"
-              label="Destination Account"
-              value={formik.values.destinationAccount}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={
-                formik.touched.destinationAccount &&
-                Boolean(formik.errors.destinationAccount)
-              }
-              helperText={
-                formik.touched.destinationAccount &&
-                formik.errors.destinationAccount
-              }
+              error={formik.touched.assignee && Boolean(formik.errors.assignee)}
+              helperText={formik.touched.assignee && formik.errors.assignee}
               size="small"
             />
             <IconButton type="submit" disableRipple>

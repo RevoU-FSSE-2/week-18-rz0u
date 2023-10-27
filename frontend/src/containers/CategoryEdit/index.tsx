@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { CategoryForm } from "../../components";
-import { TransactionsApproval as CategoryFormProps } from "../../types";
+import { TodosEdit as CategoryFormProps } from "../../types";
 import axios from "axios";
 import { BASE_URL } from "../../environment";
 
@@ -19,7 +19,7 @@ const CategoryEdit = () => {
 
   const handleSubmit = async (values: CategoryFormProps) => {
     axios
-      .put(`${BASE_URL}/transactions/approval`, values, {
+      .put(`${BASE_URL}/todos/${values._id}`, values, {
         headers,
       })
       .then((response) => {
